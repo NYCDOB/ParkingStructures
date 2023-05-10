@@ -494,7 +494,7 @@ function ready(){
 				var z = map.getZoom();
 				if (z > 13 && map.hasLayer(pointsOverlay)==false) {
 					pointsOverlay.addTo(map);
-					commDistSheds.setStyle({fillOpacity:0.4});
+					commDistSheds.setStyle({fillOpacity:0.3});
 				}
 				else if (z <= 13 && map.hasLayer(pointsOverlay)==true) {
 					map.removeLayer(pointsOverlay);
