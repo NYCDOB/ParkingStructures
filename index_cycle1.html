@@ -636,7 +636,7 @@ function ready(){
 					case 'UNSAFE':
 						return 'pointUnsafe';
 						break;
-					case 'No Report Filed':
+					case 'NO REPORT FILED':
 						return 'pointNoRptFiled';
 						break; 
 				}
@@ -689,7 +689,7 @@ function ready(){
 			.on("mouseover", function(d, i){
 				previousColor = d3.select(this).style("fill");
 				tooltipFacades.transition().duration(0); 
-				$(this).attr("style", "cursor: pointer; fill: #eef442; fill-opacity: 0.7;");			
+				$(this).attr("style", "cursor: pointer; fill: #DFEB1B; fill-opacity: 0.7;");			
 			})
 			.on("mouseout", function(d, i){			
 				d3.select(this).style("fill",previousColor);
@@ -775,13 +775,13 @@ function ready(){
 				noRptSlider.onchange = function(){
 						if(this.checked){
 							d3.selectAll(".pointNoRptFiled").filter(function(d) {
-								return d.filingStatus == "No Report Filed";
+								return d.filingStatus == "NO REPORT FILED";
 							})
 							.style("display", "block");	
 
 						} else {
 							d3.selectAll(".pointNoRptFiled").filter(function(d) {
-								return d.filingStatus == "No Report Filed";
+								return d.filingStatus == "NO REPORT FILED";
 							})
 							.style("display", "none");
 										
@@ -811,7 +811,7 @@ function ready(){
 				<!-- d.swarmpCompDate = d["SWARMP Completion Date"]; -->
 				d.unsafeCompDate = d["UNSAFE / SREM Completion Date"];
 				d.parkingStructureID = d["Parking Structure ID"];
-				d.filingStatus = d["Filing Status"];
+				d.filingStatus = d["Filing Status"].toUpperCase();
 				d.subcycle = d["PIPS Sub-Cycle"];
 				d.filingDate = d["Effective Filing Date"];
                 d.qpsi_name = d["QPSI"];
@@ -962,7 +962,7 @@ function ready(){
 			
 			//NRF SUB CYCLES
 			var filterVals=points.filter(function(d){
-				return ((d["Filing Status"]=="No Report Filed"))
+				return ((d["Filing Status"]=="NO REPORT FILED"))
 			})
 			var nestNRF = d3.nest()
 				.key(function(d) { return d.subcycle; }).sortKeys(d3.ascending)
