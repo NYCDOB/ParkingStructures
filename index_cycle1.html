@@ -507,7 +507,7 @@ input:checked + .slider:before {
 			
 				<div class="chart-wrapper">
 				  <div class="chart-stage" id="chart-01">
-					<div class="summarytxt" >PARKING STRUCTURE INSPECTIONS: </br>
+					<div class="summarytxt" >PIPS UNIVERSE: </br>
 						<span id="summary1_parking"></span>
 					</div>
 				  </div>
@@ -520,7 +520,7 @@ input:checked + .slider:before {
 				</div>		
 				<div class="chart-wrapper">
 					<div class="chart-stage" id="chart-boro-park">
-					<div class="summarytxt" >INSPECTIONS BY BOROUGH</div>
+					<div class="summarytxt" >PIPS UNIVERSE BY BOROUGH</div>
 					  <svg id="borosheds"></svg>
 					</div>
 				</div>		
@@ -670,7 +670,8 @@ function ready(){
 						//'INSPECTION REQUEST DATE: ' + d.inspReqDate + '</br>' +
 						//'INSPECTION COMPLETE DATE: ' + d.inspCompleteDate + '</br>' +
 						//'PENDING INSPECTION: ' + pendVal(d.pending)
-                        'QPSI NAME: ' + d.qpsi_name
+                        'QPSI NAME: ' + d.qpsi_name + '</br>' +
+						'FISP UNIVERSE: ' + d.fisp
 
 			//'<br><span class="fisphist">FISP History <span class="glyphicon glyphicon-new-window"></span></span>'			
 						
@@ -804,7 +805,7 @@ function ready(){
 	
 	 
 		//d3.csv("https://raw.githubusercontent.com/NYCDOB/data_store/master/facadeLL11_v3.csv",function(data){
-		d3.csv("data/ParkingStructureInspections.csv",function(data){
+		d3.csv("data/ParkingStructureInspections_071423.csv",function(data){
 				points = data.filter(function(d) {
 					//if( ((+d["Lat"] != 0) && (+d["Lon"] !=0 )) && (([d.Cycle] == "9A") || [d.Cycle] == "9B" || [d.Cycle] == "9C") ) {
 					if( ((d["PIPS Sub-Cycle"] == "1A") || d["PIPS Sub-Cycle"] == "1B" || d["PIPS Sub-Cycle"] == "1C") ) {
@@ -825,6 +826,7 @@ function ready(){
 				d.subcycle = d["PIPS Sub-Cycle"];
 				d.filingDate = d["Effective Filing Date"];
                 d.qpsi_name = d["QPSI"];
+				d.fisp = [d.FISP];
 			return d;
 			});
 			
