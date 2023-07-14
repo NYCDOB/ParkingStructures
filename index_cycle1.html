@@ -671,7 +671,8 @@ function ready(){
 						//'INSPECTION COMPLETE DATE: ' + d.inspCompleteDate + '</br>' +
 						//'PENDING INSPECTION: ' + pendVal(d.pending)
                         'QPSI NAME: ' + d.qpsi_name + '</br>' +
-						'FISP UNIVERSE: ' + d.fisp
+						'FISP UNIVERSE: ' + d.fisp + '</br>' +
+						'ACTIVE STRUCTURAL PERMIT: ' + d.activeStructuralPermit
 
 			//'<br><span class="fisphist">FISP History <span class="glyphicon glyphicon-new-window"></span></span>'			
 						
@@ -827,6 +828,7 @@ function ready(){
 				d.filingDate = d["Effective Filing Date"];
                 d.qpsi_name = d["QPSI"];
 				d.fisp = [d.FISP];
+				d.activeStructuralPermit = [d.ActiveStructuralPermit];
 			return d;
 			});
 			
