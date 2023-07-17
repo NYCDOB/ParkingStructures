@@ -697,12 +697,13 @@ function ready(){
 			})
 			.on("mouseover", function(d, i){
 				previousColor = d3.select(this).style("fill");
+				previousOpacity = d3.select(this).style("fill-opacity");
 				tooltipFacades.transition().duration(0); 
 				$(this).attr("style", "cursor: pointer; fill: #DFEB1B; fill-opacity: 0.7;");			
 			})
 			.on("mouseout", function(d, i){			
 				d3.select(this).style("fill",previousColor);
-				d3.select(this).style( "fill-opacity",0.7);
+				d3.select(this).style("fill-opacity",previousOpacity);
 				return tooltipFacades.transition().delay(500).style("visibility", "hidden");
 			});
 		
