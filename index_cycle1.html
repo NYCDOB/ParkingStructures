@@ -32,11 +32,13 @@ body {
 
 .pointSafe{
 	fill: #59a14f;
+	<!-- fill-opacity: .7; -->
 	stroke: #fff;
 
 }
 .pointSREM{
 	fill: #f28e2c;
+	<!-- fill-opacity: .7; -->
 	stroke: #fff;
 
 }
@@ -48,6 +50,7 @@ body {
 <!-- } -->
 .pointUnsafe{
 	fill: #DF3B20;
+	<!-- fill-opacity: .7; -->
 	stroke: #fff;
 
 }
@@ -659,14 +662,13 @@ function ready(){
 						'FILING STATUS: ' + (d.filingStatus).toUpperCase() + '</br>' +	
 						'FILING DATE: ' + d.filingDate + '</br>' +
 						'BIN: ' + d.bin + '</br>' +								
-						'ADDRESS: '+ d.houseNum + ' ' + d.street + ', ' + d.Borough + '</br>' +
+						'ADDRESS: '+ d.Address + '</br>' +
 						'BLOCK: ' + d.block + '</br>' +	
 						'LOT: ' + d.lot + '</br>' +	
-						<!-- 'SREM COMPLETION DATE: ' + d.sremCompDate + '</br>' + -->
-						'UNSAFE/SREM COMPLETION DATE: ' + d.unsafeCompDate + '</br>' +
-						//'INSPECTION REQUEST DATE: ' + d.inspReqDate + '</br>' +
-						//'INSPECTION COMPLETE DATE: ' + d.inspCompleteDate + '</br>' +
-						//'PENDING INSPECTION: ' + pendVal(d.pending)
+						'CD: ' + d.cd + '</br>' +
+						'BUILDING CLASS: ' + d.bldgClass + '</br>' +
+						'CITY OWNED: ' + d.cityOwned + '</br>' +
+						'UNSAFE/SREM COMPLETION DATE: ' + d.unsafeCompDate + '</br>' +						
                         'QPSI NAME: ' + d.qpsi_name + '</br>' +
 						'FISP UNIVERSE: ' + d.fisp + '</br>' +
 						'ACTIVE STRUCTURAL PERMIT: ' + d.activeStructuralPermit
@@ -703,6 +705,7 @@ function ready(){
 			})
 			.on("mouseout", function(d, i){			
 				d3.select(this).style("fill",previousColor);
+				//d3.select(this).style( "fill-opacity",0.7);
 				d3.select(this).style("fill-opacity",previousOpacity);
 				return tooltipFacades.transition().delay(500).style("visibility", "hidden");
 			});
@@ -813,12 +816,15 @@ function ready(){
 				}).map(function(d){
 				d.latLng = [+d["LAT"],+d["LONG"]];
 				d.bin = [d.BIN];
-				d.houseNum = d["House  Number"];
-				d.street = d["Street Name"];
-				d.Borough = [d.Borough];
+				//d.houseNum = d["House  Number"];
+				//d.street = d["Street Name"];
+				//d.Borough = [d.Borough];
+				d.Address = [d.Address];
+				d.cd = d["C.B. No."];
 				d.block = [d.Block];
 				d.lot = [d.Lot];
-				<!-- d.swarmpCompDate = d["SWARMP Completion Date"]; -->
+				d.bldgClass = d["DOF Bldg Classification Description"];
+				d.cityOwned = d["City Owned"];
 				d.unsafeCompDate = d["UNSAFE / SREM Completion Date"];
 				d.parkingStructureID = d["Parking Structure ID"];
 				d.filingStatus = d["Filing Status"].toUpperCase();
