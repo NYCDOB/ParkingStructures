@@ -369,8 +369,15 @@ function ready(){
 		.append('circle')
 		.attr('cx',function(d){return proj.latLngToLayerPoint(d.latLng).x;})
 		.attr('cy',function(d){return proj.latLngToLayerPoint(d.latLng).y;})
+		<!-- .attr('class', function(d){ -->
+			<!-- if(d.BldgClass=='G0' || d.BldgClass=='G1' || d.BldgClass=='G2' || d.BldgClass=='G6'|| d.BldgClass=='G7'){ -->
+				<!-- return 'pointPark'; -->
+			<!-- } else { -->
+				<!-- return 'pointMixed'; -->
+			<!-- } -->
+		<!-- }) -->
 		.attr('class', function(d){
-			if(d.BldgClass=='G0' || d.BldgClass=='G1' || d.BldgClass=='G2' || d.BldgClass=='G6'|| d.BldgClass=='G7'){
+			if(d.BldgClassDesc=='GARAGES & GAS STATIONS:RESIDENTIAL TAX CLASS 1 GARAGE' || d.BldgClassDesc=='GARAGES & GAS STATIONS:GARAGE TWO OR MORE STORIES' || d.BldgClassDesc=='GARAGES & GAS STATIONS:GARAGE 1 STORY, SEMI-FIREPROOF OR FIREPROOF' || d.BldgClassDesc=='GARAGES & GAS STATIONS:LICENSED PARKING LOT'|| d.BldgClassDesc=='GARAGES & GAS STATIONS:UNLICENSED PARKING LOT'){
 				return 'pointPark';
 			} else {
 				return 'pointMixed';
@@ -379,17 +386,19 @@ function ready(){
 		.on('click', function(d){
 			tooltip.style("visibility", "visible");
 					tooltip.html(
-						'Name: ' + d.Name + '</br>' +
+						//'Name: ' + d.Name + '</br>' +
+						'Parking Structure ID: ' + d.psid + '</br>' +
 						'BIN: ' + d.bin + '</br>' +								
-						'ADDRESS: '+ d.Address + ', ' + d.Borough + '</br>' +
-						'FILING CYCLE: '+ d.FilingCycle + '</br>' +
-						'FILING PERIOD: '+ d.FilingPeriod + '</br>' +
+						'ADDRESS: '+ d.Address + '</br>' +
+						//'FILING CYCLE: '+ d.FilingCycle + '</br>' +
+						'FILING SUB-CYCLE: '+ d.FilingSubCycle + '</br>' +
+						//'FILING PERIOD: '+ d.FilingPeriod + '</br>' +
 						'BLOCK: ' + d.block + '</br>' +	
 						'LOT: ' + d.lot + '</br>' +	
 						'COMMUNITY DISTRICT: ' + d.CD + '</br>' +
 						'CITY OWNED: ' + d.CityOwned + '</br>' +
-						'BUILDING CLASS: ' + d.BldgClass + '</br>' +
-						'BUILDING CLASS DESCRIPTION: ' + d.BldgClassDesc + '</br>'
+						//'BUILDING CLASS: ' + d.BldgClass + '</br>' +
+						'BUILDING CLASS: ' + d.BldgClassDesc + '</br>'
 					)
 			if (d3.event.pageX > (width - 200)) {
 			   tooltip.style("left", (d3.event.pageX - 350) + "px");
@@ -418,7 +427,8 @@ function ready(){
 	});
 
 
-	d3.csv("data/ParkingStructures.csv",function(data){
+	//d3.csv("data/ParkingStructures.csv",function(data){
+	d3.csv("data/ParkingStructureInspections.csv",function(data){
 				points = data.filter(function(d) {
 					if( !isNaN(+[d.LAT]) && !isNaN(+[d.LONG]) ) {
 						return d;
@@ -426,17 +436,19 @@ function ready(){
 				}).map(function(d){
 				d.latLng = [+[d.LAT],+[d.LONG]];
 				d.bin = [d.BIN];
-				d.Name = [d.Name];
-				d.Borough = [d.Borough];
-				d.CD = [d.CD];
-				d.CityOwned = [d.CityOwned];
+				//d.Name = [d.Name];
+				d.psid = d["Parking Structure ID"];
+				//d.Borough = [d.Borough];
+				d.CD = d["C.B. No."];
+				d.CityOwned = d["City Owned"];
 				d.Address = [d.Address];
 				d.block = [d.Block];
 				d.lot = [d.Lot];
-				d.BldgClass = [d.BldgClass];
-				d.BldgClassDesc = [d.BldgClassDesc];
-				d.FilingCycle = [d.FilingCycle];
-				d.FilingPeriod = [d.FilingPeriod];
+				//d.BldgClass = [d.BldgClass];
+				d.BldgClassDesc = d["DOF Bldg Classification Description"];
+				d.FilingCycle = d["PIPS Cycle"];
+				d.FilingSubCycle = d["PIPS Sub-Cycle"];
+				//d.FilingPeriod = [d.FilingPeriod];
 			return d;
 			});
 			
@@ -494,7 +506,7 @@ function ready(){
 				var z = map.getZoom();
 				if (z > 13 && map.hasLayer(pointsOverlay)==false) {
 					pointsOverlay.addTo(map);
-					commDistSheds.setStyle({fillOpacity:0.4});
+					commDistSheds.setStyle({fillOpacity:0.3});
 				}
 				else if (z <= 13 && map.hasLayer(pointsOverlay)==true) {
 					map.removeLayer(pointsOverlay);
@@ -516,7 +528,7 @@ function ready(){
 	
 	$('#dlData').click(function(e) {
 		e.preventDefault();  //stop the browser from following
-		window.location.href = 'data/ParkingStructures.csv';
+		window.location.href = 'data/ParkingStructureInspections.csv';
 		
 	});
 	
