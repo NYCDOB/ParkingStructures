@@ -426,9 +426,7 @@ function ready(){
 		pointsUpd.attr('stroke-width', 1 / proj.scale);
 	});
 
-
-	//d3.csv("data/ParkingStructures.csv",function(data){
-	d3.csv("data/ParkingStructureInspections.csv",function(data){
+	d3.csv("https://nycdob.github.io/ParkingStructures/data/ParkingStructureInspections.csv",function(data){
 				points = data.filter(function(d) {
 					if( !isNaN(+[d.LAT]) && !isNaN(+[d.LONG]) ) {
 						return d;
