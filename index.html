@@ -331,7 +331,7 @@ $(document).ready(function(){
       _refocusOnMap: L.Util.falseFn // Do nothing.
     });	
 var map = L.map('map').setView([40.712824, -74.005999], 11);
-L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png', {attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
 
 var tooltip = d3.select('#map').append('div')//var tooltip = d3.select('body').append('div')
 	.on('mouseover', function(d, i){
@@ -426,9 +426,7 @@ function ready(){
 		pointsUpd.attr('stroke-width', 1 / proj.scale);
 	});
 
-
-	//d3.csv("data/ParkingStructures.csv",function(data){
-	d3.csv("data/ParkingStructureInspections.csv",function(data){
+	d3.csv("https://nycdob.github.io/ParkingStructures/data/ParkingStructureInspections.csv",function(data){
 				points = data.filter(function(d) {
 					if( !isNaN(+[d.LAT]) && !isNaN(+[d.LONG]) ) {
 						return d;
@@ -453,7 +451,7 @@ function ready(){
 			});
 			
 
-			$.getJSON("data/ParkingStructure_CDs.json",function(json){
+			$.getJSON("https://nycdob.github.io/ParkingStructures/data/ParkingStructure_CDs.json",function(json){
 				
 				function getColor(d) {
 					if(d=='1A'){
@@ -528,7 +526,7 @@ function ready(){
 	
 	$('#dlData').click(function(e) {
 		e.preventDefault();  //stop the browser from following
-		window.location.href = 'data/ParkingStructureInspections.csv';
+		window.location.href = 'https://nycdob.github.io/ParkingStructures/data/ParkingStructureInspections.csv';
 		
 	});
 	
