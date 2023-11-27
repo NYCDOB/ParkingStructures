@@ -751,8 +751,9 @@ function ready(){
 					   tooltipFacades.style("left", (d3.event.pageX + 20) + "px")
 							.style("top", (d3.event.pageY -30) + "px");
 					}
-					if (d3.event.pageY > (height - 150)) {
-					   tooltipFacades.style("top", (d3.event.pageY -100) + "px");
+					//prevent tooltip displaying out of map bounds
+					if (d3.event.pageY > (height - 300)) {
+					   tooltipFacades.style("top", (d3.event.pageY -350) + "px");
 					} else {
 					   tooltipFacades.style("top", (d3.event.pageY -30) + "px");
 					}
