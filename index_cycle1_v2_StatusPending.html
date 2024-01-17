@@ -933,7 +933,7 @@ function ready(){
 	});
 	
 	
-		d3.csv("data/ParkingStructureInspections_statusPending.csv",function(data){
+		d3.csv("https://raw.githubusercontent.com/NYCDOB/ParkingStructures/gh-pages/data/ParkingStructureInspections_statusPending.csv",function(data){
 				points = data.filter(function(d) {
 					//if( ((+d["Lat"] != 0) && (+d["Lon"] !=0 )) && (([d.Cycle] == "9A") || [d.Cycle] == "9B" || [d.Cycle] == "9C") ) {
 					if( ((d["PIPS Sub-Cycle"] == "1A") || d["PIPS Sub-Cycle"] == "1B" || d["PIPS Sub-Cycle"] == "1C") ) {
