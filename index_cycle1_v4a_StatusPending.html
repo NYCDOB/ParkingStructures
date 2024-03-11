@@ -870,7 +870,7 @@ function ready(){
 
 				if(d3.select(this).style("fill-opacity") != 0){
 					tooltipFacades.html(dit( d.LAT.concat(d.LONG),1));
-					tooltipFacades.style("visibility", "visible");
+					tooltipFacades.style("visibility", "visible");}
 			})
 			.on("mouseover", function(d, i){
 				previousColor = d3.select(this).style("fill");
