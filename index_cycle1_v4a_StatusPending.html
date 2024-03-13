@@ -80,6 +80,9 @@ body {
 	font-size:1.2em;
 	padding:0px;
 	left:5px;
+	display:flex;
+	max-height:60%;
+	flex-direction: column;
 }
 
 
@@ -510,6 +513,11 @@ input:checked + .slider:before {
   padding-left: 10px;
   text-align:left;
 }
+._cycleD {
+	padding: 2px 10px 10px;
+	/* overflow-y:scroll; */
+	overflow-y:auto;
+}
 ._cycleD > div{
 	display: flex;
 	margin: 3px 0px;
@@ -533,11 +541,8 @@ flex:4;
 ._nav{
 	flex:1;
 }
-._cycleD {
-	padding: 2px 10px 10px;
-}
 ._tD{
-	background-color: #969696;
+	background-color: #969696 ;/*rgb(43, 119, 241);*/
 	color: white;
 	padding-left:4px;
 	display:flex;
@@ -569,7 +574,7 @@ a.ndec{
   'wght' 110,
   'GRAD' -25,
   'opsz' 10;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 </style>
@@ -765,6 +770,7 @@ var tooltipFacades = d3.select('#map').append('div')//var tooltip = d3.select('b
 	// 	tooltipFacades.transition().delay(500).style('visibility', 'hidden');
 	// })
 	.attr('class', 'tooltipFacades');
+document.querySelector(".tooltipFacades").style.zIndex=parseInt(document.querySelector("#ui-container2")?.style.zIndex)+1;
 var width = $("#map").width(),
 	height = $("#map").height(),
 	points = [],
@@ -787,18 +793,18 @@ function ready(){
 
 	pointsOverlay = L.d3SvgOverlay(function(sel,proj){
 		var pointsUpdSQFT = sel.selectAll('circle').data(points);
-		let geogs=["LAT","LONG"];
-		let _lObj = {"Parking Structure ID":"","PIPS Sub-Cycle":"Sub-Cycle","Filing Status":"","Effective Filing Date":"Filing Date","BIN":"","Address":"", "Block":"","Lot":"","C.B. No.":"CD","DOF Bldg Classification Description":"Building Class","UNSAFE / SREM Completion Date":"","QPSI":"QPSI Name","FISP":"FISP Universe","ActiveStructuralPermit":"Active Structural Permit"};
+		let _lObj = {"PIPS Sub-Cycle":"Sub-Cycle","Filing Status":"","Effective Filing Date":"Filing Date","BIN":"","Address":"", "Block":"","Lot":"","C.B. No.":"CD","DOF Bldg Classification Description":"Building Class","UNSAFE / SREM Completion Date":"","QPSI":"QPSI Name","FISP":"FISP Universe","ActiveStructuralPermit":"Active Structural Permit"};	
 		let dit=(_pl,...args)=>{
 				if (!_pl) {tooltipFacades.style("visibility","hidden");console.error("Invalid key");return ""};
-				if(_pl?.target?.className.match("parkhist")){window.open('https://nycdob.github.io/ParkHist/parkhist.html?'+document.querySelector("._cycleD div:nth-child(2)").textContent,"hist");return;}
+				if(_pl?.target?.className.match("parkhist")){window.open('https://nycdob.github.io/ParkHist/parkhist.html?'+document.querySelector(".parkhist").textContent.match(/\w\d+/)[0],"hist");return;}
 				if (!args[0] && !_pl.target.className.match(/_pr|_nx|_cl/)) {return};
 				let _dX=0;
 				let _l=[];
 				let doString = (_sObject,_dX, _l,)=>{
+					let _xL = `<div class="_fM3_0"><div>Parking Structure ID:</div><div class="parkhist" title="View History">${_l[_dX]["Parking Structure ID"]} <span class="material-symbols-outlined parkhist">open_in_new</span></div></div>`;
 					let _xx="";
 					for ( [k,v] of Object.entries(_sObject) ) {_xx+=`<div class="_fM3_0"><div>${v||k}:</div><div>${_l[_dX][`${k}`]}</div></div>`};
-					let _oled= `<div class="_tD"><div class="_nav">${_dX+1} of ${_l.length}</div><div><span class="_pr" title="Previous">&#11207;</span><span class="_nx" title="Next">&#11208;</span></div><div  title="Close" class="material-symbols-outlined _cl">close</div></div><div class="_cycleD">${_xx}<span class="_cor">${_l[_dX]["LAT"]}${_l[_dX]["LONG"]}</span><div class="parkhist">PSID History<span class="material-symbols-outlined parkhist">open_in_new</span></div></div>`;
+					let _oled= `<div class="_tD"><div class="_nav">${_dX+1} of ${_l.length}</div><div><span class="_pr" title="Previous">&#11207;</span><span class="_nx" title="Next">&#11208;</span></div><div  title="Close" class="material-symbols-outlined _cl">close</div></div><div class="_cycleD">${_xL}${_xx}<span class="_cor">${_l[_dX]["LAT"]}${_l[_dX]["LONG"]}</span>`;
 					return _oled;
 				}
 				let _clr=()=>{
@@ -1023,9 +1029,6 @@ function ready(){
 				d.activeStructuralPermit = [d.ActiveStructuralPermit];
 			return d;
 			});
-			
-			
-			
 			$.getJSON("https://nycdob.github.io/ParkingStructures/data/ParkingStructure_CDs.json",function(json){
 				
 				function getColor(d) {
@@ -1123,7 +1126,7 @@ function ready(){
 			
 			//TOTAL FACADE FILINGS
 			var totalPark = points.map(function(d) { return d.parkingStructureID });
-			console.log(totalPark);
+			//console.log(totalPark);
 			d3.select("#summary1_parking").html(numberFormat(totalPark.length));
 			
 			//BOROUGH			
@@ -1134,7 +1137,7 @@ function ready(){
 				})
 				.entries(points)
 				.sort(function(a, b){ return d3.descending(a.values, b.values); })
-				console.log(nestBoroPark);
+				//console.log(nestBoroPark);
 				parkBoroChart(nestBoroPark);
 
 			//CURRENT STATUS			
@@ -1145,7 +1148,7 @@ function ready(){
 				})
 				.entries(points)
 				.sort(function(a, b){ return d3.descending(a.values, b.values); })
-				console.log(nestFilingStatus);
+				//console.log(nestFilingStatus);
 				statusChart(nestFilingStatus);
 				
 			/*	
@@ -1200,7 +1203,7 @@ function ready(){
 				})			
 				.entries(points)
 				//.sort(function(a, b){ return d3.descending(a.values, b.values); })//.slice(0,5);	
-			console.log(nestCycles);
+			//console.log(nestCycles);
 			cycleChart(nestCycles);
 
 			//SAFE SUB CYCLES
