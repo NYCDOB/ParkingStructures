@@ -26,11 +26,22 @@ body {
 	height: 50px;
 	width: 110px;	  
 }
+.footr{ 
+	background-color: black;
+    display: flex;
+    color: white;
+    flex-direction: row;
+    justify-content: space-around;
+    font-weight: 700;
+    font-size: smaller;
+    height: 40px;
+    align-items: center;
+	& a {color:white;}
+}
 #map {
 	height: 100%;
 	pointer-events: all;
 }
-
 .pointSafe{
 	fill: #59a14f;
 	<!-- fill-opacity: .7; -->
@@ -600,6 +611,10 @@ a.ndec{
 
 }
 
+a.nolinkstyle:focus, 
+a.nolinkstyle:visited, 
+a.nolinkstyle:active {	text-decoration:none;	color:white;}
+
 .mainH {
 	padding:10px 40px;
 	display:flex;
@@ -773,8 +788,10 @@ a.ndec{
                 </div>
               </div>
         </div>
-
-
+		<div class="footr">
+			<div><a class="nolinkstyle" href="https://www.nyc.gov/home/privacy-policy.page" target="_blank">Privacy Policy</a></div>
+			<div><a class="nolinkstyle" href="https://www.nyc.gov/home/terms-of-use.page" target="_blank">Terms of Use</a></div>
+		</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.9/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3-format@3"></script>
